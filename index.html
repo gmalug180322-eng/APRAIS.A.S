@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!-- Tienda generada con Harvys, asistente de e-commerce creado por el Profesor Harvey Sanabria -->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APRAI S.A.S. — Servicios contables y asesoría integral</title>
+<meta name="description" content="Auditores Profesionales y Asesores Integrales S.A.S. Firma de contadores que presta servicios de contabilidad, consultoría, auditoría y revisoría fiscal.">
+<meta name="generator" content="Harvys — asistente de e-commerce del Profesor Harvey Sanabria">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="anim-baja tarj-planas modo-claro">
+
+<!-- MODAL PAGO -->
+<div class="modal-overlay" id="modal-pago" onclick="modalClickFuera(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-head"><h3>Confirmar pago</h3><button class="modal-cerrar" onclick="cerrarModal()" aria-label="Cerrar">✕</button></div>
+    <div class="modal-body">
+      <div class="modal-total"><span class="tl">Total a pagar</span><span class="tm" id="modal-total-monto">$0</span></div>
+      <div class="pago-metodos" id="pago-metodos"></div>
+      <div class="pago-datos" id="pago-datos">
+        <div class="pd-label">Transferir a este número</div>
+        <div class="pd-numero" id="pd-numero"></div>
+        <div class="pd-nombre" id="pd-nombre"></div>
+        <button class="btn-copiar" onclick="copiarNumero()">📋 Copiar número</button>
+      </div>
+      <div class="pasos">
+        <div class="paso"><div class="paso-num">1</div><div class="paso-txt" id="paso-1"></div></div>
+        <div class="paso"><div class="paso-num">2</div><div class="paso-txt">Toca <strong>"Confirmar y enviar"</strong> — se abre WhatsApp con tu pedido</div></div>
+        <div class="paso"><div class="paso-num">3</div><div class="paso-txt" id="paso-3"></div></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <a href="#" target="_blank" rel="noopener" class="btn-wsp" onclick="return prepararWsp(this)">✅ Confirmar y enviar por WhatsApp</a>
+      <button class="btn-seguir" onclick="cerrarModal()">← Seguir comprando</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" onclick="cerrarCarrito()"></div>
+
+<button class="carrito-fab" onclick="toggleCarrito()" id="fab" aria-label="Abrir carrito">🛒<span class="carrito-badge" id="badge">0</span></button>
+
+<div class="carrito-panel" id="panel-carrito">
+  <div class="panel-header"><h3>Solicitud de contratación</h3><button class="btn-cerrar" onclick="cerrarCarrito()" aria-label="Cerrar carrito">✕</button></div>
+  <ul id="lista-carrito"></ul>
+  <div class="panel-footer">
+    <div class="total-row"><span class="total-lbl">Total</span><span class="total-monto" id="total">$0</span></div>
+    <div class="panel-btns"><button class="btn-vaciar" onclick="vaciarCarrito()">Vaciar</button><button class="btn-pagar" onclick="pagar()">Solicitar contratación por WhatsApp</button></div>
+  </div>
+</div>
+
+<header class="hero hero-centrado">
+  <div class="hero-bg efecto-ninguno"></div>
+  <div class="hero-content">
+    <div>
+      
+      <div class="hero-badge">Servicios contables para personas y empresas</div>
+      <h1>Soluciones contables<span>con APRAI S.A.S.</span></h1>
+      <p class="hero-sub">Explora el catálogo y solicita la contratación directamente con APRAI por WhatsApp. Confirma el alcance, los plazos y las condiciones antes de contratar.</p>
+      <a href="#catalogo" class="btn-hero">Ver servicios
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <div class="hero-stats"><div class="hero-stat"><div class="num">6</div><div class="lbl">Servicios en el catálogo</div></div><div class="hero-stat"><div class="num">Bogotá</div><div class="lbl">Oficina física</div></div><div class="hero-stat"><div class="num">Cobertura</div><div class="lbl">Nacional e internacional</div></div></div>
+    </div>
+    </div>
+  <div class="hero-scroll"><div></div></div>
+</header>
+
+<section class="banner-sec">
+  <div class="banner-glow"></div>
+  <div class="banner-content">
+    <div class="sec-label">Contratación directa con APRAI</div>
+    <h2>Elige el servicio <em>que necesitas</em></h2>
+    <p>Agrega los servicios de tu interés y envía tu solicitud por WhatsApp. APRAI confirmará el alcance, el valor aplicable, los tiempos y las condiciones de contratación. Enviar la solicitud no constituye una contratación ni un pago.</p>
+    <div class="banner-chips"><span class="chip">Consulta el catálogo</span><span class="chip">Selecciona tus servicios</span><span class="chip">Contacta directamente a APRAI</span></div>
+  </div>
+</section>
+
+<div class="filtros-wrap" id="filtros-bar">
+  <div class="busqueda-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg>
+    <input type="text" id="buscador" placeholder="Buscar producto..." oninput="filtrarBusqueda()">
+  </div>
+</div>
+<section class="catalogo-wrap" id="catalogo">
+  <div class="catalogo-header">
+    <div><div class="sec-label">Asesoría y servicios contables</div><div class="sec-title">Servicios disponibles para contratar</div></div>
+    <div class="catalogo-count" id="cont-count"></div>
+  </div>
+  <div id="productos"></div>
+</section>
+
+<section class="beneficios-sec" id="beneficios">
+  <div class="sec-centro"><div class="sec-label">Modalidades de atención</div><div class="sec-title">Cómo te acompaña APRAI</div></div>
+  <div class="beneficios-grid">
+    <div class="bcard"><div class="bcard-icono">🌎</div><h3>Cobertura nacional e internacional</h3><p>Prestación de servicios para clientes a nivel nacional e internacional.</p></div><div class="bcard"><div class="bcard-icono">🏢</div><h3>Oficina física</h3><p>Clientes y potenciales clientes pueden acudir a la oficina en Bogotá. Dirección y horarios: [POR COMPLETAR].</p></div><div class="bcard"><div class="bcard-icono">🤝</div><h3>Visitas según el servicio</h3><p>Se realizan visitas de campo dependiendo del servicio solicitado.</p></div><div class="bcard"><div class="bcard-icono">📄</div><h3>Documentación física</h3><p>Se envía documentación a los clientes que soliciten en físico el trabajo realizado. Los tiempos varían según el servicio.</p></div>
+  </div>
+</section>
+<section class="seccion-personalizada" id="custom-calendario">
+<section style="padding:48px 24px;background:var(--bg2);color:var(--tx)"><div style="max-width:1100px;margin:auto"><p class="sec-label">Planeación de obligaciones</p><h2 class="sec-title">Calendario tributario</h2><p style="color:var(--tx2)">Espacio para consultar las fechas de cumplimiento de obligaciones con el Estado.</p><div style="padding:24px;background:var(--card);border:1px solid var(--p);border-radius:var(--r)"><strong>Fechas y fuentes oficiales: [POR COMPLETAR]</strong><p>APRAI debe validar el año, las obligaciones y las entidades correspondientes antes de publicar el calendario. Los vencimientos pueden variar según cada contribuyente.</p><p>Por ahora, consulta con APRAI las obligaciones que correspondan a tu caso.</p></div></div></section>
+</section>
+
+<section class="recs-sec">
+  <div class="sec-label">Conoce nuestras áreas</div>
+  <div class="sec-title">Servicios que pueden interesarte</div>
+  <div class="recs-grid" id="recomendados"></div>
+</section>
+
+<section class="top-sec">
+  <div class="sec-label">Interés de los visitantes</div>
+  <div class="sec-title">Servicios más consultados en la votación</div>
+  <div class="top-grid" id="top"></div>
+</section>
+
+<section class="duelo-sec">
+  <div class="sec-label">Cuéntanos qué necesitas</div>
+  <div class="sec-title">¿Qué servicio necesitas?</div>
+  <div class="duelo-arena" id="duelo"></div>
+  <p class="duelo-info">Elige el servicio de tu interés. Esta votación refleja preferencias de visitantes; no contrata servicios ni evalúa su calidad.</p>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-marca"><h3>APRAI S.A.S.</h3><p>APRAI S.A.S. — Auditores Profesionales y Asesores Integrales S.A.S. Bogotá D.C. Teléfono: 601 271 1497. Dirección y horarios: [POR COMPLETAR].</p></div>
+    <div class="footer-col"><h4>Contacto</h4><ul><li><a href="https://wa.me/573150454887" target="_blank" rel="noopener">WhatsApp: +57 3150454887</a></li><li><a href="https://www.facebook.com/people/APRAI-SAS/100064566796915/?locale=mt_MT#" target="_blank" rel="noopener">Facebook</a></li><li>📍 Bogotá D.C.</li></ul></div>
+    <div class="footer-col"><h4>Pagos</h4><ul></ul></div>
+    <div class="footer-col"><h4>Categorías</h4><ul><li>Personas Naturales y Jurídicas</li><li>Personas Jurídicas</li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 APRAI S.A.S. — Todos los derechos reservados</span>
+    <span>Catálogo de servicios · Prototipo académico · Shopper Metaverso</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
